@@ -18,7 +18,7 @@ window.CALCULATOR_CONFIG = {
   // 'https://formspree.io/f/abcdwxyz'. See README.md, "Connect the email form".
   // While this is empty, the form still unlocks the results but NO
   // emails are saved anywhere (a warning appears in the browser console).
-  formEndpoint: '',
+  formEndpoint: 'https://www.agritourismsuccess.com/_functions/calculatorSignup',
 
   // ---- Call to action shown after someone signs up ----------------
   cta: {
