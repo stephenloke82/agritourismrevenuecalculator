@@ -1,0 +1,9 @@
+{
+  "name": "agritourism-revenue-calculator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free agritourism revenue calculator and lead magnet for AgritourismSuccess.com. Static site, no build step.",
+  "scripts": {
+    "test": "node --test"
+  }
+}

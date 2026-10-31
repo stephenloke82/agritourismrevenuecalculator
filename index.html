@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agritourism Revenue Calculator</title>
+  <meta name="description" content="Free calculator: estimate what farm stays, u-pick, events, tours, a farm stand and seasonal attractions could earn on your farm.">
+  <meta name="theme-color" content="#2f5d3a">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 28V14L16 5l12 9v14z' fill='%239c3b26'/%3E%3Cpath d='M12 28v-8h8v8' fill='%23fbf6ec'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to results</a>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow" id="brand">AgritourismSuccess.com</p>
+      <h1>Agritourism Revenue Calculator</h1>
+      <p class="lede">Pick the ways you could welcome visitors to your farm, enter your own numbers, and see what they could add up to in a year.</p>
+    </div>
+    <svg class="hills" viewBox="0 0 1200 60" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <path d="M0 40 C 200 0, 380 0, 600 30 S 1000 60, 1200 20 L1200 60 L0 60 Z" fill="currentColor"/>
+    </svg>
+  </header>
+
+  <main class="wrap layout">
+    <section class="inputs" aria-labelledby="inputs-title">
+      <h2 id="inputs-title"><span class="step">1</span> Choose your income streams</h2>
+      <p class="example-note" role="note">
+        <strong>The starting numbers are made-up examples</strong>, not industry averages.
+        Replace them with your own prices, visitor counts and costs to get an estimate for your farm.
+      </p>
+
+      <div id="streams"></div>
+
+      <div class="card fixed-costs">
+        <label for="fixed-costs" class="field-label">Other yearly costs not counted above</label>
+        <p class="hint" id="fixed-costs-hint">For example insurance, permits, advertising, website. Leave at 0 if you are not sure yet.</p>
+        <div class="input-wrap money">
+          <span class="prefix" aria-hidden="true" data-currency-symbol>$</span>
+          <input id="fixed-costs" type="number" inputmode="decimal" min="0" step="any" value="0" aria-describedby="fixed-costs-hint">
+        </div>
+      </div>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="results-title" tabindex="-1">
+      <h2 id="results-title"><span class="step">2</span> Your estimate</h2>
+
+      <div class="card headline">
+        <p class="headline-label">Estimated yearly revenue</p>
+        <p class="headline-value" id="headline-value" aria-live="polite" aria-atomic="true">$0</p>
+        <p class="headline-sub" id="headline-sub">from 0 income streams</p>
+      </div>
+
+      <!-- Locked: shown until the visitor signs up -->
+      <div class="card locked" id="locked">
+        <div class="teaser" aria-hidden="true">
+          <div class="teaser-bar" style="width:88%"></div>
+          <div class="teaser-bar" style="width:64%"></div>
+          <div class="teaser-bar" style="width:41%"></div>
+          <div class="teaser-row"><span></span><span></span><span></span></div>
+        </div>
+        <h3>See your full breakdown, free</h3>
+        <ul class="unlock-list">
+          <li>Estimated profit after costs</li>
+          <li>Revenue for each income stream, with a chart</li>
+          <li>Low, expected and high scenarios</li>
+        </ul>
+
+        <form id="lead-form" novalidate>
+          <div class="form-field">
+            <label for="lead-name">First name</label>
+            <input id="lead-name" name="name" type="text" autocomplete="given-name" required aria-describedby="lead-name-error">
+            <p class="field-error" id="lead-name-error" hidden>Please enter your name.</p>
+          </div>
+          <div class="form-field">
+            <label for="lead-email">Email address</label>
+            <input id="lead-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="lead-email-error">
+            <p class="field-error" id="lead-email-error" hidden>Please enter a valid email address.</p>
+          </div>
+          <!-- Spam trap: hidden from people, bots tend to fill it in -->
+          <div class="hp" aria-hidden="true">
+            <label for="lead-website">Leave this empty</label>
+            <input id="lead-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="form-field consent">
+            <input id="lead-consent" name="consent" type="checkbox" required aria-describedby="lead-consent-error">
+            <label for="lead-consent" id="consent-label">Yes, add me to the AgritourismSuccess.com email list for agritourism tips and ebook offers. I can unsubscribe at any time.</label>
+            <p class="field-error" id="lead-consent-error" hidden>Please tick the box so we can email you.</p>
+          </div>
+          <button type="submit" class="btn btn-primary" id="lead-submit">Show my full results</button>
+          <p class="form-status" id="form-status" role="status"></p>
+          <p class="small" id="privacy-line">We never sell your email.</p>
+        </form>
+      </div>
+
+      <!-- Unlocked: filled in by js/app.js -->
+      <div id="details" hidden>
+        <div class="card">
+          <h3 id="details-title" tabindex="-1">Estimated yearly profit</h3>
+          <p class="net-value" id="net-value">$0</p>
+          <p class="small" id="net-explain"></p>
+        </div>
+
+        <div class="card">
+          <h3>Where the money comes from</h3>
+          <ul class="bars" id="bars"></ul>
+          <div class="table-scroll">
+            <table class="breakdown-table">
+              <caption class="visually-hidden">Yearly estimate by income stream</caption>
+              <thead>
+                <tr><th scope="col">Stream</th><th scope="col">Revenue</th><th scope="col">Costs</th><th scope="col">Profit</th></tr>
+              </thead>
+              <tbody id="breakdown-body"></tbody>
+              <tfoot id="breakdown-foot"></tfoot>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Low, expected and high</h3>
+          <div class="scenarios" id="scenarios"></div>
+          <p class="small" id="scenario-note"></p>
+        </div>
+
+        <div class="card cta" id="cta">
+          <h3 id="cta-heading">Turn these numbers into a real plan</h3>
+          <p id="cta-text"></p>
+          <a class="btn btn-accent" id="cta-button" href="#" target="_blank" rel="noopener">Browse the ebooks</a>
+          <ul class="ebook-list" id="ebook-list" hidden></ul>
+        </div>
+      </div>
+
+      <p class="disclaimer" role="note">
+        <strong>Please note:</strong> this is a rough estimate, not a guarantee or financial advice.
+        Real results depend on your location, season, weather, marketing, local rules and many other things.
+        Check your numbers with an accountant or advisor before you invest.
+      </p>
+    </section>
+  </main>
+
+  <!-- Phone-only running total, hidden once the results are on screen -->
+  <a class="mini-total" id="mini-total" href="#results" hidden>
+    <span>Estimated yearly revenue <strong id="mini-total-value">$0</strong></span>
+    <span class="mini-total-link">See results ↓</span>
+  </a>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>A free tool from <a id="footer-link" href="https://www.agritourismsuccess.com" target="_blank" rel="noopener">AgritourismSuccess.com</a></p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/calculator.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
