@@ -1,0 +1,15 @@
+<!doctype html>
+<!-- Manual test page: shows the calculator inside an iframe that resizes itself. Open via a local web server. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Iframe test</title></head>
+<body style="margin:0;background:#ddd;font-family:sans-serif">
+<p id="log" style="padding:8px">waiting for height message…</p>
+<iframe id="calc" src="../index.html" title="Agritourism Revenue Calculator" style="width:100%;border:0;height:600px;display:block"></iframe>
+<script>
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.type === 'agritourism-calculator:height') {
+      document.getElementById('calc').style.height = e.data.height + 'px';
+      document.getElementById('log').textContent = 'iframe height set to ' + e.data.height + 'px';
+    }
+  });
+</script>
+</body></html>
